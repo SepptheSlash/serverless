@@ -97,7 +97,7 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
         loadingTodos: false
       })
     } catch (e) {
-      alert(`Failed to fetch todos: ${e.message}`)
+      alert(`Failed to fetch todos: ${'test'}`) //e.message
     }
   }
 
@@ -157,6 +157,8 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
   }
 
   renderTodosList() {
+    console.log(this.state.todos);
+    
     return (
       <Grid padded>
         {this.state.todos.map((todo, pos) => {
