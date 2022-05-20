@@ -1,12 +1,12 @@
 import * as AWS from 'aws-sdk'
-import * as AWSXRay from 'aws-xray-sdk'
+//import * as AWSXRay from 'aws-xray-sdk'
+const AWSXRay = require('aws-xray-sdk')
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import { createLogger } from '../utils/logger'
 import { TodoItem } from '../models/TodoItem'
 import { TodoUpdate } from '../models/TodoUpdate';
 
 const XAWS = AWSXRay.captureAWS(AWS)
-console.log(XAWS);//just to make sure the variable is used
 
 const logger = createLogger('TodosAccess')
 
@@ -42,6 +42,7 @@ export class TodosAccess {
       TableName: this.todosTable,
       Item: todo
     }).promise()
+    logger.info('Created a todo')
 
     return todo
   }
@@ -69,6 +70,7 @@ export class TodosAccess {
         ReturnValues: "UPDATED_NEW"
     }).promise()
 
+    logger.info('updated a todo')
     return update
   }
 
@@ -81,7 +83,8 @@ async deleteTodo(todoId: string, userId: string): Promise<boolean> {
             todoId: todoId
         }
         }).promise()
-
+    
+    logger.info('Deleted a todo')
     return true
     }
 
@@ -92,11 +95,11 @@ async deleteTodo(todoId: string, userId: string): Promise<boolean> {
 function createDynamoDBClient() {
     if (process.env.IS_OFFLINE) {
       console.log('Creating a local DynamoDB instance')
-      return new AWS.DynamoDB.DocumentClient({
+      return new XAWS.DynamoDB.DocumentClient({
         region: 'localhost',
         endpoint: 'http://localhost:8000'
       })
     }
   
-    return new AWS.DynamoDB.DocumentClient()
+    return new XAWS.DynamoDB.DocumentClient()
   }

@@ -19,6 +19,7 @@ const attachmentUtils = new AttachmentUtils();
 
 // TODO: Implement businessLogic
 export async function getTodosForUser(userId: String): Promise<TodoItem[]> {
+    logger.info('All todo items are requested from user  ', userId);
     return await todosAccess.getAllTodos(userId)
   }
 
@@ -28,7 +29,7 @@ export async function createTodo(
     userId: string
   ): Promise<TodoItem> {
     
-    logger.info('A todo item is created from ', userId);
+    logger.info('A todo item is created from user ', userId);
 
     const itemId = uuid.v4()
   
@@ -51,6 +52,7 @@ export async function createTodo(
     userId: string
   ): Promise<TodoUpdate> {
 
+    logger.info('A todo item is updated from ', userId);
     return await todosAccess.updateTodo(todoId, userId, updatedTodo)
   }
 
@@ -59,25 +61,17 @@ export async function createTodo(
     todoId: string,
     userId: string
   ): Promise<boolean> {
+    
+    logger.info('A todo item was deleted by ', userId);
 
     return await todosAccess.deleteTodo(todoId, userId)
   }
-/*
-  userId: string
-  todoId: string
-  createdAt: string
-  name: string
-  dueDate: string
-  done: boolean
-  attachmentUrl?: string
-  */
 
 
   export async function createAttachmentPresignedUrl(
     todoId: string,
     userId: string
   ): Promise <string> {
-    
-    console.log('The user to delete a todo is ' + userId)
+    logger.info('An attachment is uploaded by ', userId);
     return await attachmentUtils.getPreSignedUrl(todoId)
   }
