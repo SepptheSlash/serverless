@@ -64,12 +64,7 @@ functions:
           - dynamodb:Query
           - dynamodb:GetItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
-      #- Effect: Allow
-      #  Action:
-      #    - dynamodb:Query
-      #    - dynamodb:GetItem
-      #  Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}/index/${self:provider.environment.TODOS_CREATED_AT_INDEX}
-
+  
   # TODO: Configure this function - 
   # Provide iamRoleStatements property. Decide the Actions and AWS Resource. 
   # To refer to an AWS resource defined in the "Resources" section, you can use "Resource: !GetAtt <resource-name>.Arn"
@@ -84,7 +79,7 @@ functions:
           authorizer: Auth
           request:
             schemas:
-              application/json: ${file(src/validators/created-todo-model.json)}
+              application/json: ${file(src/models/created-todo-model.json)}
     iamRoleStatementsInherit: true
     iamRoleStatements:
       - Effect: Allow
@@ -104,7 +99,7 @@ functions:
           authorizer: Auth
           request:
             schema:
-              application/json: ${file(src/validators/update-todo-model.json)}  
+              application/json: ${file(src/models/update-todo-model.json)}  
     iamRoleStatementsInherit: true
     iamRoleStatements:
       - Effect: Allow
