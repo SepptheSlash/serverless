@@ -44,7 +44,7 @@ export async function updateToDowithAttachmentUrl(todoId: string, userId: string
         },
         UpdateExpression:
             "SET #attachmentUrlToDo = :attachmentUrl",
-        ReturnValues: "UPDATED_WITH_ATTACHMENTURL"
+        ReturnValues: "UPDATED_NEW"
     }).promise()
     
     return 'updated attachment Url'
