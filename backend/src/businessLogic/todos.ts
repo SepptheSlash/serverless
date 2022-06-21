@@ -1,5 +1,5 @@
 import { TodosAccess } from '../dataLayer/todosAcess'
-import { AttachmentUtils } from './attachmentUtils'; //formerly done with class AttachmentURL??
+import { AttachmentUtils } from '../dataLayer/attachmentUtils'; //formerly done with class AttachmentURL??
 import { TodoItem } from '../models/TodoItem'
 import { CreateTodoRequest } from '../requests/CreateTodoRequest'
 import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
